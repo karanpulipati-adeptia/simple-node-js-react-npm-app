@@ -29,21 +29,21 @@ pipeline {
             steps {
                 // Run tests if you have any
                 // Example using Jest:
-                // sh 'npm test'
+                sh 'npm test'
             }
         }
         
         stage('Deploy') {
             steps {
                 // Deployment steps
-                // Example: Copy files to a server, deploy to a cloud platform, etc.
+                Example: Copy files to a server, deploy to a cloud platform, etc.
             }
         }
     }
     
     post {
         always {
-            // Clean up or any other post-processing tasks
+            Clean up or any other post-processing tasks
         }
     }
 }
