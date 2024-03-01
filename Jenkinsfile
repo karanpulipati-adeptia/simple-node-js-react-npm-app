@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout source code from your Git repository
-                git 'https://github.com/yourusername/your-react-project.git'
+                git 'https://github.com/karanpulipati-adeptia/simple-node-js-react-npm-app'
             }
         }
         
@@ -31,20 +31,17 @@ pipeline {
                 // Example using Jest:
                 sh 'npm test'
             }
-        }
-        
+         
         stage('Deploy') {
             steps {
                 // Deployment steps
                 Example: Copy files to a server, deploy to a cloud platform, etc.
             }
-        }
-    }
+        }        }        
     
     post {
         always {
             Clean up or any other post-processing tasks
         }
     }
-}
 }
