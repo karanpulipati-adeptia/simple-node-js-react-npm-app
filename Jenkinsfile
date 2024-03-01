@@ -1,47 +1,22 @@
 pipeline {
     agent any
-    
     stages {
-        stage('Checkout') {
+        stage('Build') {
             steps {
-                // Checkout source code from your Git repository
-                git 'https://github.com/karanpulipati-adeptia/simple-node-js-react-npm-app'
-            }
-        }
-        
-        stage('Install Dependencies') {
-            steps {
-                // Use Node.js installation defined in Jenkins NodeJS plugin
-                // Make sure to configure the NodeJS installation in Jenkins global tool configuration
-                // This assumes 'node' and 'npm' commands are available in the PATH
                 sh 'npm install'
             }
         }
-        
-        stage('Build') {
-            steps {
-                // Build your React.js project
-                sh 'npm run build'
-            }
-        }
-        
         stage('Test') {
             steps {
-                // Run tests if you have any
-                // Example using Jest:
-                sh 'npm test'
+                sh './jenkins/scripts/test.sh'
             }
-         
-        stage('Deploy') {
+        }
+        stage('Deliver') { 
             steps {
-                // Deployment steps
-                Example: Copy files to a server, deploy to a cloud platform, etc.
+                sh './jenkins/scripts/deliver.sh' 
+                input message: 'Finished using the web site? (Click "Proceed" to continue)' 
+                sh './jenkins/scripts/kill.sh' 
             }
-        }        }        
-    
-    post {
-        always {
-            Clean up or any other post-processing tasks
         }
     }
 }
