@@ -1,30 +1,49 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:lts-buster-slim'
-            args '-p 3000:3000'
-        }
-    }
-    environment {
-        CI = 'true'
-    }
+    agent any
+    
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
+                // Checkout source code from your Git repository
+                git 'https://github.com/yourusername/your-react-project.git'
+            }
+        }
+        
+        stage('Install Dependencies') {
+            steps {
+                // Use Node.js installation defined in Jenkins NodeJS plugin
+                // Make sure to configure the NodeJS installation in Jenkins global tool configuration
+                // This assumes 'node' and 'npm' commands are available in the PATH
                 sh 'npm install'
             }
         }
-        stage('Test') {
+        
+        stage('Build') {
             steps {
-                sh './jenkins/scripts/test.sh'
+                // Build your React.js project
+                sh 'npm run build'
             }
         }
-        stage('Deliver') {
+        
+        stage('Test') {
             steps {
-                sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
+                // Run tests if you have any
+                // Example using Jest:
+                // sh 'npm test'
             }
+        }
+        
+        stage('Deploy') {
+            steps {
+                // Deployment steps
+                // Example: Copy files to a server, deploy to a cloud platform, etc.
+            }
+        }
+    }
+    
+    post {
+        always {
+            // Clean up or any other post-processing tasks
         }
     }
 }
